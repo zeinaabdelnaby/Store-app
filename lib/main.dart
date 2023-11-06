@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'package:store_app/custom.dart';
 import 'package:store_app/screens/home_page.dart';
 import 'package:store_app/screens/update_product_page.dart';
 
@@ -8,17 +9,21 @@ void main() {
 }
 
 class StoreApp extends StatelessWidget {
-  const StoreApp({super.key});
+  const StoreApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      routes: {
-        HomePage.id : (context) => HomePage(),
-        UpdateProductPage.id : (context) => UpdateProductPage(),
-      },
-      initialRoute: HomePage.id,
-    );
+    return ChangeNotifierProvider(
+        create: (context) {
+          return Custom();
+        },
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          routes: {
+            HomePage.id: (context) => HomePage(),
+            UpdateProductPage.id: (context) => UpdateProductPage(),
+          },
+          initialRoute: HomePage.id,
+        ));
   }
 }
